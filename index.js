@@ -1,0 +1,31 @@
+
+const express = require('express');
+const session = require('express-session');
+const path = require('path');
+const router = require("./routes/routes.js")
+const sequelize = require("./config");
+
+const app = express();
+
+app.use(session({
+	secret: 'secret',
+	resave: true,
+	saveUninitialized: true
+}));
+
+app.use(express.json({limit: '10mb'}));
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'static')));
+
+app.use((_, res, next) => {
+	res.setHeader('Access-Control-Allow-Origin', '*');
+	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE');
+	res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+	next();
+});
+
+app.use(router);
+
+sequelize.sync().then(r =>{});
+
+const server = app.listen(3000, function () {});
