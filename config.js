@@ -8,9 +8,7 @@ const {Sequelize} = require("sequelize");
 // 	database: "sql6518513"
 // });
 
-const sequelize = new Sequelize('cmcs', 'root', '', {
-	host: "127.0.0.1",
-	dialect: 'mysql',
+const sequelize = new Sequelize("mysql://bbfca9b2e17dab:ec6c2e66@us-cdbr-east-06.cleardb.net/heroku_6a1fde77ac93ba1?reconnect=true", {
 	define: {
 		timestamps: false,
 	}
