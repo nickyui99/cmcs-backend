@@ -14,4 +14,12 @@ const sequelize = new Sequelize("mysql://bbfca9b2e17dab:ec6c2e66@us-cdbr-east-06
 	}
 });
 
+// const sequelize = new Sequelize("cmcs", "test", "", {
+// 	host: "34.70.33.252",
+// 	dialect: "mysql" ,
+// 	define: {
+// 		timestamps: false,
+// 	},
+// });
+
 module.exports = sequelize;

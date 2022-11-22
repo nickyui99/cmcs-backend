@@ -28,4 +28,9 @@ app.use(router);
 
 sequelize.sync().then(r =>{});
 
-const server = app.listen(3000, function () {});
+// const server = app.listen(3000, function () {});
+
+const server = app.listen(process.env.PORT || 5000, () => {
+	const port = server.address().port;
+	console.log(`Express is working on port ${port}`);
+});
