@@ -48,7 +48,7 @@ Ngo.init({
 			allowNull: false
 		},
 		hrs_of_service: {
-			type: DataTypes.TIME,
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 		trash_collected: {

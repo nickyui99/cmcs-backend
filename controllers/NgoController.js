@@ -42,4 +42,3 @@ const updateNgo = (req, res) => {
 }
 
 module.exports = {getNgo, updateNgo}
-

@@ -27,10 +27,10 @@ User.init({
 			allowNull: false,
 		},
 		birthdate: {
-			type: DataTypes.DATE,
+			type: DataTypes.DATEONLY,
 			allowNull: false,
 		},
-		mobile_num: {
+		contact_num: {
 			type: DataTypes.STRING,
 			allowNull: false,
 		},
@@ -39,7 +39,7 @@ User.init({
 			allowNull: false,
 		},
 		total_hrs_volunteered: {
-			type: DataTypes.TIME,
+			type: DataTypes.STRING,
 			allowNull: false,
 		},
 		project_participated: {

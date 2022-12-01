@@ -3,6 +3,7 @@ const Account = require("../models/Account");
 const Users = require("../models/User");
 const sequelize = require("../config");
 const Ngo = require("../models/Ngo");
+const moment = require("moment");
 
 
 const login = (req, res) => {
@@ -14,24 +15,15 @@ const login = (req, res) => {
 	console.log(credentials);
 
 	//associate models
-		Account.hasMany(Ngo, {
-			foreignKey: 'acc_id',
-			targetKey: 'acc_id'
-		});
-		Account.hasMany(Users, {
-			foreignKey: 'acc_id',
-			targetKey: 'acc_id'
-		});
+	Account.hasOne(Ngo, {
+		foreignKey: 'acc_id',
+		targetKey: 'acc_id'
+	});
+	Account.hasOne(Users, {
+		foreignKey: 'acc_id',
+		targetKey: 'acc_id'
+	});
 
-		Users.belongsTo(Account, {
-			foreignKey: 'acc_id',
-			targetKey: 'acc_id'
-		});
-
-		Ngo.belongsTo(Account, {
-			foreignKey: 'acc_id',
-			targetKey: 'acc_id'
-		})
 
 	Account.findOne({
 		where: {
@@ -43,33 +35,43 @@ const login = (req, res) => {
 		]
 	})
 		.then(account => {
+
 			console.log(account);
-			if(!account) {
-				res.status(404).json({message: "Email not registered"});
-			}
-			else{
+			if (!account) {
+				res.status(400).json({message: "Email not registered"});
+			} else {
 				//check if password valid
 				if (credentials.password !== account.acc_pass) {
-					res.status(401).json({message: "Invalid credentials"});
+					res.status(400).json({message: "Invalid credentials"});
 				} else {
-					if(account.users.length !== 0){  //if user update their token
+					if (account.user) {  //if user update their token
 						let generatedToken = Date.now().toString();
 						Account.update({token: generatedToken}, {
 							where: {
 								acc_id: account.acc_id,
 							}
 						});
-						res.status(200).json({accId: account.acc_id, usrId: account.users[0].usr_id, token: generatedToken, userType: "user"});
-					} else if (account.ngos.length !== 0) { //if ngo update their token
+						res.status(200).json({
+							accId: account.acc_id,
+							usrId: account.user.usr_id,
+							token: generatedToken,
+							userType: "user"
+						});
+					} else if (account.ngo) { //if ngo update their token
 						let generatedToken = Date.now().toString();
 						Account.update({token: generatedToken}, {
 							where: {
 								acc_id: account.acc_id,
 							}
 						});
-						res.status(200).json({accId: account.acc_id, ngoId: account.ngos[0].ngo_id, token: generatedToken, userType: "ngo"});
+						res.status(200).json({
+							accId: account.acc_id,
+							ngoId: account.ngo.ngo_id,
+							token: generatedToken,
+							userType: "ngo"
+						});
 					} else {
-						res.status(404).json({message: "Account not found"});
+						res.status(400).json({message: "Account not found"});
 					}
 				}
 			}
@@ -100,17 +102,16 @@ const registerUser = async (req, res) => {
 		}
 	}).then(async acc => {
 		//account already registered in database
-		if(acc) {
+		if (acc) {
 			res.status(400).json({message: "Email address already exist."})
-		}
-		else {
+		} else {
 			//insert new user info into 'account' and 'users' table
 			const newAcc = await Account.create({
 				acc_email: userInfo.email,
 				acc_pass: userInfo.password
 			})
 
-			console.log(newAcc);
+			console.log(moment(userInfo.birthdate).format('YYYY-MM-DD HH:mm:ss'));
 
 			const newUser = await Users.create({
 				acc_id: newAcc.acc_id,
@@ -118,14 +119,15 @@ const registerUser = async (req, res) => {
 				birthdate: userInfo.birthdate,
 				mobile_num: userInfo.mobileNumber,
 				gender: userInfo.gender,
-				total_hrs_volunteered: 0,
+				total_hrs_volunteered: "00:00:00",
 				project_participated: 0,
 				acc_exp: 0
 			});
-			res.status(200).json({message: "Account registered successfully~~"})
+			res.status(200).json({message: "Account registered successfully~~"});
 		}
 	})
 }
+
 
 const registerNgo = (req, res) => {
 	const ngoInfo = {
@@ -147,10 +149,9 @@ const registerNgo = (req, res) => {
 		}
 	}).then(async acc => {
 		//account already registered in database
-		if(acc) {
+		if (acc) {
 			res.status(400).json({message: "Email address already exist. Please try again."})
-		}
-		else {
+		} else {
 			//insert new user info into 'account' and 'users' table
 			const newAcc = await Account.create({
 				acc_email: ngoInfo.email,
@@ -167,10 +168,12 @@ const registerNgo = (req, res) => {
 				address: ngoInfo.address,
 				bank_acc: ngoInfo.bankAcc,
 				tng_acc: ngoInfo.tngAcc,
-				hrs_of_service: 0,
+				hrs_of_service: "00:00:00",
 				trash_collected: 0,
 				acc_status: "approved"
 			});
+
+			res.status(200).json({message: "OK"});
 		}
 	})
 }

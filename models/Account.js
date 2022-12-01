@@ -1,7 +1,6 @@
 "use strict";
 const sequelize = require("../config");
 const {DataTypes, Model} = require("sequelize");
-const Users = require("./User");
 
 class Account extends Model {
 	static associate() {

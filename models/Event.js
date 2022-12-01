@@ -64,6 +64,9 @@ Event.init({
 		max_participant: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
+		},
+		trash_collected: {
+			type: DataTypes.FLOAT,
 		}
 	},
 	{
