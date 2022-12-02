@@ -24,11 +24,11 @@ Alert.init({
 		}
 	},
 	title:{
-		type: DataTypes.STRING,
+		type: DataTypes.STRING(255),
 		allowNull: false,
 	},
 	description:{
-		type: DataTypes.STRING,
+		type: DataTypes.TEXT("long"),
 		allowNull: false,
 	},
 	datetime: {
@@ -44,7 +44,7 @@ Alert.init({
 		allowNull: false,
 	},
 	address: {
-		type: DataTypes.STRING,
+		type: DataTypes.STRING(255),
 		allowNull: false,
 	},
 	image: {

@@ -23,7 +23,7 @@ User.init({
 			}
 		},
 		usr_name: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(255),
 			allowNull: false,
 		},
 		birthdate: {
@@ -31,19 +31,11 @@ User.init({
 			allowNull: false,
 		},
 		contact_num: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(15),
 			allowNull: false,
 		},
 		gender: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
-		total_hrs_volunteered: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
-		project_participated: {
-			type: DataTypes.INTEGER,
+			type: DataTypes.STRING(15),
 			allowNull: false,
 		},
 		acc_exp: {

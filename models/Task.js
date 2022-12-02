@@ -23,7 +23,7 @@ Task.init({
 		}
 	},
 	task_name: {
-		type: DataTypes.STRING,
+		type: DataTypes.STRING(255),
 		allowNull: false,
 	}
 }, {

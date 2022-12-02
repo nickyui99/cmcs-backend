@@ -88,7 +88,7 @@ const registerUser = async (req, res) => {
 		"name": req.body.name,
 		"birthdate": req.body.birthdate,
 		"gender": req.body.gender,
-		"mobileNumber": req.body.mobileNum,
+		"contactNum": req.body.contactNum,
 		"email": req.body.email,
 		"password": req.body.password
 	}
@@ -117,10 +117,8 @@ const registerUser = async (req, res) => {
 				acc_id: newAcc.acc_id,
 				usr_name: userInfo.name,
 				birthdate: userInfo.birthdate,
-				mobile_num: userInfo.mobileNumber,
+				contact_num: userInfo.contactNum,
 				gender: userInfo.gender,
-				total_hrs_volunteered: "00:00:00",
-				project_participated: 0,
 				acc_exp: 0
 			});
 			res.status(200).json({message: "Account registered successfully~~"});
@@ -168,8 +166,6 @@ const registerNgo = (req, res) => {
 				address: ngoInfo.address,
 				bank_acc: ngoInfo.bankAcc,
 				tng_acc: ngoInfo.tngAcc,
-				hrs_of_service: "00:00:00",
-				trash_collected: 0,
 				acc_status: "approved"
 			});
 

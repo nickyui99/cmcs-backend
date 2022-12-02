@@ -26,15 +26,15 @@ Event.init({
 			}
 		},
 		event_unique_id: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(20),
 			allowNull: false,
 		},
 		event_name: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(255),
 			allowNull: false,
 		},
 		description: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT("medium"),
 			allowNull: false,
 		},
 		start_datetime: {
@@ -46,19 +46,19 @@ Event.init({
 			allowNull: false,
 		},
 		address: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(255),
 			allowNull: false,
 		},
 		lng: {
-			type: DataTypes.FLOAT,
+			type: DataTypes.FLOAT(6),
 			allowNull: false,
 		},
 		lat: {
-			type: DataTypes.FLOAT,
+			type: DataTypes.FLOAT(6),
 			allowNull: false,
 		},
 		image: {
-			type: DataTypes.TEXT,
+			type: DataTypes.TEXT("long"),
 			allowNull: false,
 		},
 		max_participant: {
@@ -66,7 +66,7 @@ Event.init({
 			allowNull: false,
 		},
 		trash_collected: {
-			type: DataTypes.FLOAT,
+			type: DataTypes.FLOAT(6),
 		}
 	},
 	{

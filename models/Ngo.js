@@ -47,14 +47,6 @@ Ngo.init({
 			type: DataTypes.STRING,
 			allowNull: false
 		},
-		hrs_of_service: {
-			type: DataTypes.STRING,
-			allowNull: false,
-		},
-		trash_collected: {
-			type: DataTypes.FLOAT,
-			allowNull: false
-		},
 		acc_status: {
 			type: DataTypes.STRING,
 			allowNull: false,

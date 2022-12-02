@@ -31,7 +31,7 @@ Chat.init({
 			}
 		},
 		message: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT("long"),
 			allowNull: false,
 		},
 		created_at: {

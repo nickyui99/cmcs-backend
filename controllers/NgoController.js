@@ -8,7 +8,7 @@ const getNgo = (req, res) => {
 	console.log(ngoId);
 
 	Ngo.findOne({
-		attributes: ['ngo_id', 'ngo_name', 'ngo_admin', 'contact_num', 'address', 'bank_acc', 'tng_acc', 'hrs_of_service', 'trash_collected'],
+		attributes: ['ngo_id', 'ngo_name', 'ngo_admin', 'contact_num', 'address', 'bank_acc', 'tng_acc'],
 		where: {
 			ngo_id: ngoId
 		}

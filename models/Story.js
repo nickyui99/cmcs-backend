@@ -23,11 +23,11 @@ Story.init({
 			}
 		},
 		content: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(255),
 			allowNull: false,
 		},
 		image: {
-			type: DataTypes.TEXT,
+			type: DataTypes.TEXT("long"),
 			allowNull: false,
 		},
 		created_at: {

@@ -1,18 +1,25 @@
 const {Sequelize} = require("sequelize");
 
 
-// const con = mysql.createConnection({
-// 	host: "sql6.freesqldatabase.com",
-// 	user: "sql6518513",
-// 	password: "EvM9hkJItd",
-// 	database: "sql6518513"
+// const sequelize = new Sequelize("cmcs", "root", "", {
+// 	host: "127.0.0.1",
+// 	dialect: "mysql",
+// 	define: {
+// 		timestamps: false,
+// 	}
 // });
 
-const sequelize = new Sequelize("cmcs", "root", "", {
-	host: "127.0.0.1",
+const sequelize = new Sequelize("sql6582248", "sql6582248", "l6qg7ePrQU", {
+	host: "sql6.freesqldatabase.com",
 	dialect: "mysql",
 	define: {
 		timestamps: false,
+	},
+	pool: {
+		max: 5,
+		min: 0,
+		acquire: 30000,
+		idle: 10000
 	}
 });
 
