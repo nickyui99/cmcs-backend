@@ -3,6 +3,7 @@ const {Op} = require("sequelize");
 const User = require("../models/User");
 const TaskAllocation = require("../models/TaskAllocation");
 const Event = require("../models/Event");
+const Ngo = require("../models/Ngo");
 
 
 const joinEvent = (req, res) => {
@@ -233,6 +234,11 @@ const getParticipatedEvent = (req, res) => {
 		targetKey: "event_id"
 	})
 
+	Event.belongsTo(Ngo, {
+		foreignKey: "ngo_id",
+		targetKey: "ngo_id"
+	})
+
 	Participant.findOne({
 		where: {
 			usr_id: usrId,
@@ -242,7 +248,14 @@ const getParticipatedEvent = (req, res) => {
 		include: [
 			{
 				model: Event,
-				required: true
+				required: true,
+				include:[
+					{
+						model: Ngo,
+						attributes: ["ngo_name"],
+						required: true
+					}
+				]
 			}
 		]
 	}).then(participant => {
