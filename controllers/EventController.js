@@ -24,7 +24,6 @@ const getAllEvents = (req, res) => {
 	Event.findAll({
 		attributes: [
 			'event_id',
-			'event_unique_id',
 			'event_name',
 			'description',
 			'start_datetime',
@@ -77,7 +76,6 @@ const getMyEvents = (req, res) => {
 	Event.findAll({
 		attributes: [
 			'event_id',
-			'event_unique_id',
 			'event_name',
 			'description',
 			'start_datetime',
@@ -123,7 +121,6 @@ const getEventInfo = (req, res) => {
 	Event.findOne({
 		attributes: [
 			'event_id',
-			'event_unique_id',
 			'event_name',
 			'description',
 			'start_datetime',
@@ -184,7 +181,6 @@ const createEvent = (req, res) => {
 
 			const event = await Event.create({
 				ngo_id: ngo.ngo_id,
-				event_unique_id: "123",
 				event_name: eventData.eventName,
 				description: eventData.eventDescription,
 				start_datetime: eventData.startDateTime,

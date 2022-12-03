@@ -25,10 +25,6 @@ Event.init({
 				key: 'ngo_id'
 			}
 		},
-		event_unique_id: {
-			type: DataTypes.STRING(20),
-			allowNull: false,
-		},
 		event_name: {
 			type: DataTypes.STRING(255),
 			allowNull: false,
