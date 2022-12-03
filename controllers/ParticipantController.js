@@ -253,12 +253,12 @@ const getParticipatedEvent = (req, res) => {
 					{
 						model: Ngo,
 						attributes: ["ngo_name"],
-						required: true
 					}
 				]
 			}
 		]
 	}).then(participant => {
+		console.log(participant)
 		res.status(200).json(participant);
 	}).catch(err => {
 		console.log(err);
