@@ -239,7 +239,7 @@ const getParticipatedEvent = (req, res) => {
 		targetKey: "ngo_id"
 	})
 
-	Participant.findOne({
+	Participant.findAll({
 		where: {
 			usr_id: usrId,
 			attendance: true,
