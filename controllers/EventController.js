@@ -356,38 +356,6 @@ const cancelEvent = (req, res) => {
 	})
 }
 
-const attendEvent = (req, res) => {
-	console.log(req.body)
 
-	const eventId = req.body.eventId;
-	const usrId = req.body.usrId
 
-	Participant.findOne({
-		where: {
-			event_id: eventId,
-			usr_id: usrId
-		},
-	}).then(participant => {
-		if (participant) {
-			Participant.update({
-				attendance: true
-			}, {
-				where: {
-					event_id: eventId,
-					usr_id: usrId
-				}
-			}).then(result => {
-				console.log(result);
-				res.status(200).json({message: "OK"});
-			}).catch(err => {
-				console.log(err);
-				res.status(400).json({message: err});
-			});
-
-		} else {
-			res.status(400).json({message: "You are not a participant of this event"});
-		}
-	})
-}
-
-module.exports = {getAllEvents, getMyEvents, getEventInfo, createEvent, updateEvent, cancelEvent, updateAchievement, attendEvent};
+module.exports = {getAllEvents, getMyEvents, getEventInfo, createEvent, updateEvent, cancelEvent, updateAchievement};

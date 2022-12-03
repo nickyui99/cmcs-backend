@@ -2,6 +2,7 @@ const Participant = require("../models/Participant");
 const {Op} = require("sequelize");
 const User = require("../models/User");
 const TaskAllocation = require("../models/TaskAllocation");
+const Event = require("../models/Event");
 
 
 const joinEvent = (req, res) => {
@@ -183,6 +184,75 @@ const approveRequest = (req, res) => {
 	})
 }
 
+const attendEvent = (req, res) => {
+	console.log(req.body)
+
+	const eventId = req.body.eventId;
+	const usrId = req.body.usrId
+
+	Participant.findOne({
+		where: {
+			event_id: eventId,
+			usr_id: usrId,
+		},
+	}).then(participant => {
+		if (participant) {
+
+			if(participant.status === true){
+				Participant.update({
+					attendance: true
+				}, {
+					where: {
+						event_id: eventId,
+						usr_id: usrId
+					}
+				}).then(result => {
+					console.log(result);
+					res.status(200).json({message: "OK"});
+				}).catch(err => {
+					console.log(err);
+					res.status(400).json({message: err});
+				});
+			} else {
+				res.status(400).json({message: "Your join status is not approved yet. Please contact the organizer."});
+			}
+
+		} else {
+			res.status(400).json({message: "You are not a participant of this event"});
+		}
+	})
+}
+
+const getParticipatedEvent = (req, res) => {
+	console.log(req.body)
+
+	const usrId = req.body.usrId
+
+	Participant.belongsTo(Event, {
+		foreignKey: "event_id",
+		targetKey: "event_id"
+	})
+
+	Participant.findOne({
+		where: {
+			usr_id: usrId,
+			attendance: true,
+			status: true
+		},
+		include: [
+			{
+				model: Event,
+				required: true
+			}
+		]
+	}).then(participant => {
+		res.status(200).json(participant);
+	}).catch(err => {
+		console.log(err);
+		res.status(400).json({message: err});
+	})
+}
+
 module.exports = {
 	joinEvent,
 	deleteParticipant,
@@ -190,5 +260,7 @@ module.exports = {
 	getParticipants,
 	joinRequests,
 	approveRequest,
-	getParticipantInfo
+	getParticipantInfo,
+	attendEvent,
+	getParticipatedEvent
 }
