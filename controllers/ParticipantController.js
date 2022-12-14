@@ -207,12 +207,12 @@ const attendEvent = (req, res) => {
 		include: [
 			{
 				model: User,
-				attributes:["acc_exp"]
+				attributes: ["acc_exp"]
 			}
 		]
 	}).then(participant => {
 		if (participant) {
-			if(participant.status === true){
+			if (participant.status === true) {
 				Participant.update({
 					attendance: true
 				}, {
@@ -224,9 +224,22 @@ const attendEvent = (req, res) => {
 					console.log(result);
 
 					const accExp = participant.user.acc_exp + 500;
-					sequelize.query(`UPDATE user SET acc_exp = ${accExp} + 500 WHERE usr_id = ${usrId}`)
-
-					res.status(200).json({message: "OK"});
+					User.update(
+						{
+							acc_exp: accExp
+						},
+						{
+							where: {
+								usr_id: usrId
+							}
+						}
+					).then(result => {
+						console.log(result);
+						res.status(200).json({message: "OK"});
+					}).catch(err => {
+						console.log(err);
+						res.status(400).json({message: err});
+					})
 				}).catch(err => {
 					console.log(err);
 					res.status(400).json({message: err});
@@ -266,7 +279,7 @@ const getParticipatedEvent = (req, res) => {
 			{
 				model: Event,
 				required: true,
-				include:[
+				include: [
 					{
 						model: Ngo,
 						attributes: ["ngo_name"],
