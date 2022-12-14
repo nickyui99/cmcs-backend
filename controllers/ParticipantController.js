@@ -4,6 +4,7 @@ const User = require("../models/User");
 const TaskAllocation = require("../models/TaskAllocation");
 const Event = require("../models/Event");
 const Ngo = require("../models/Ngo");
+const sequelize = require("../config");
 
 
 const joinEvent = (req, res) => {
@@ -189,7 +190,7 @@ const attendEvent = (req, res) => {
 	console.log(req.body)
 
 	const eventId = req.body.eventId;
-	const usrId = req.body.usrId
+	const usrId = req.body.usrId;
 
 	Participant.findOne({
 		where: {
@@ -198,7 +199,6 @@ const attendEvent = (req, res) => {
 		},
 	}).then(participant => {
 		if (participant) {
-
 			if(participant.status === true){
 				Participant.update({
 					attendance: true
@@ -209,6 +209,9 @@ const attendEvent = (req, res) => {
 					}
 				}).then(result => {
 					console.log(result);
+
+					sequelize.query(`UPDATE user SET acc_exp = (SELECT acc_exp FROM user WHERE usr_id = ${usrId}) + 500 WHERE usr_id = ${usrId}`)
+
 					res.status(200).json({message: "OK"});
 				}).catch(err => {
 					console.log(err);
