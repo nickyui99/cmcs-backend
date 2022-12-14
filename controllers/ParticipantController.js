@@ -192,11 +192,24 @@ const attendEvent = (req, res) => {
 	const eventId = req.body.eventId;
 	const usrId = req.body.usrId;
 
+	Participant.belongsTo(User, {
+		foreignKey: "usr_id",
+		targetKey: "usr_id"
+	})
+
 	Participant.findOne({
 		where: {
 			event_id: eventId,
 			usr_id: usrId,
 		},
+		raw: true,
+		nest: true,
+		include: [
+			{
+				model: User,
+				attributes:["acc_exp"]
+			}
+		]
 	}).then(participant => {
 		if (participant) {
 			if(participant.status === true){
@@ -210,7 +223,8 @@ const attendEvent = (req, res) => {
 				}).then(result => {
 					console.log(result);
 
-					sequelize.query(`UPDATE user SET acc_exp = (SELECT acc_exp FROM user WHERE usr_id = ${usrId}) + 500 WHERE usr_id = ${usrId}`)
+					const accExp = participant.user.acc_exp + 500;
+					sequelize.query(`UPDATE user SET acc_exp = ${accExp} + 500 WHERE usr_id = ${usrId}`)
 
 					res.status(200).json({message: "OK"});
 				}).catch(err => {
