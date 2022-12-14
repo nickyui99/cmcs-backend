@@ -41,7 +41,7 @@ const login = (req, res) => {
 					res.status(400).json({message: "Invalid credentials"});
 				} else {
 					if (account.user) {  //if user update their token
-						let generatedToken = new Date.now().toString();
+						let generatedToken = new Date().getTime().toString();
 						Account.update(
 							{
 								token: generatedToken
