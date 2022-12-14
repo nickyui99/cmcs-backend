@@ -214,7 +214,7 @@ const attendEvent = (req, res) => {
 	}).then(participant => {
 		console.log(participant)
 		if (participant) {
-			if (participant.status === true) {
+			if (participant.status === 1) {
 				Participant.update({
 					attendance: true
 				}, {
