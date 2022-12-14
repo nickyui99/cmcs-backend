@@ -202,10 +202,13 @@ const attendEvent = (req, res) => {
 			event_id: eventId,
 			usr_id: usrId,
 		},
+		raw: true,
+		nest: true,
 		include: [
 			{
 				model: User,
-				attributes: ["acc_exp"]
+				attributes: ["acc_exp"],
+
 			}
 		]
 	}).then(participant => {
