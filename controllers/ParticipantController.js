@@ -202,8 +202,6 @@ const attendEvent = (req, res) => {
 			event_id: eventId,
 			usr_id: usrId,
 		},
-		raw: true,
-		nest: true,
 		include: [
 			{
 				model: User,
@@ -211,6 +209,7 @@ const attendEvent = (req, res) => {
 			}
 		]
 	}).then(participant => {
+		console.log(participant)
 		if (participant) {
 			if (participant.status === true) {
 				Participant.update({
@@ -222,7 +221,6 @@ const attendEvent = (req, res) => {
 					}
 				}).then(result => {
 					console.log(result);
-
 					const accExp = participant.user.acc_exp + 500;
 					User.update(
 						{
