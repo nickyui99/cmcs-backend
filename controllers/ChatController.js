@@ -8,19 +8,13 @@ const Users = require("../models/User");
 
 const getChatRoom = (req, res) => {
 	const accId = req.body.accId;
+	console.log(accId)
 
-	ChatRoom.belongsTo(Account, {
-		foreignKey: "acc_id_1",
-		targetKey: "acc_id"
-	});
-	ChatRoom.belongsTo(Account, {
-		foreignKey: "acc_id_2",
-		targetKey: "acc_id"
-	});
 	ChatRoom.hasMany(Chat, {
-		foreignKey: "room_id",
-		targetKey: "room_id"
-	});
+		foreignKey: 'room_id',
+		targetKey: 'room_id'
+	})
+
 	Account.hasOne(Ngo, {
 		foreignKey: 'acc_id',
 		targetKey: 'acc_id'
@@ -32,7 +26,7 @@ const getChatRoom = (req, res) => {
 
 	ChatRoom.findAll({
 		where: {
-			[Op.or] : {
+			[Op.or]: {
 				acc_id_1: accId,
 				acc_id_2: accId
 			}
@@ -40,35 +34,60 @@ const getChatRoom = (req, res) => {
 		include: [
 			{
 				model: Chat,
-				limit: 1,
-				order: [['created_at', 'DESC']]
+				order: [['created_at', 'DESC']],
 			},
-			{
-				model: Account,
-				required: true,
-				attributes: ["acc_id"],
-				include: [
-					{
-						model: Ngo,
-						attributes: ["ngo_name", "contact_num"]
-					},
-					{
-						model: User,
-						attributes: ["usr_name", "contact_num"]
-					}
-				],
-			}
 		]
 	}).then(room => {
-		console.log(room)
+		const targetIds = room.map(item => {
+			let targetId = item.acc_id_1 === accId ? item.getDataValue("acc_id_2") : item.getDataValue("acc_id_1");
+			return targetId;
+		});
 
-		const targetIds = [];
+		console.log(targetIds)
 
-		room.forEach((item) => {
-			console.log(item)
+		Account.findAll({
+			where: {
+				acc_id: {
+					[Op.or] : targetIds
+				}
+			},
+			raw: true,
+			nest: true,
+			include: [
+				{
+					model: User,
+					attributes: [["usr_name", "acc_name"], "contact_num"]
+				},
+				{
+					model: Ngo,
+					attributes: [["ngo_name", "acc_name"], "contact_num"]
+				}
+			]
+		}).then(acc => {
+			console.log(acc)
+			let dataCounter = 0;
+			const roomList = room.map(item => {
+
+				const data =  {
+					room_id: item.getDataValue("room_id"),
+					chats: item.getDataValue("chats"),
+					target_acc: {
+						acc_id: acc[dataCounter].acc_id,
+						acc_name: acc[dataCounter].ngo.acc_name ? acc[dataCounter].ngo.acc_name : acc[dataCounter].user.acc_name,
+						acc_image: acc[dataCounter].acc_image,
+						contact_num: acc[dataCounter].ngo.contact_num ? acc[dataCounter].ngo.contact_num : acc[dataCounter].user.contact_num
+					}
+				}
+				dataCounter++;
+				return data;
+			});
+			console.log(roomList);
+
+			res.status(200).json(roomList);
+		}).catch(err => {
+			console.log(err)
+			res.status(400).json({message: err});
 		})
-
-		res.status(200).json(room);
 	}).catch(err => {
 		console.log(err);
 		res.status(400).json({message: err})

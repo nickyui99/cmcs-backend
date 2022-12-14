@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Account = require("../models/Account");
 
 const getUser = (req, res) => {
 	const usrId = req.body.usrId;
@@ -19,12 +20,16 @@ const getUser = (req, res) => {
 
 const updateUserProfile = (req, res) => {
 	const user = {
+		accId: req.body.accId,
 		usrId: req.body.usrId,
 		usrName: req.body.usrName,
 		birthdate: req.body.birthdate,
 		gender: req.body.gender,
-		mobileNum: req.body.mobileNum
+		mobileNum: req.body.mobileNum,
+		accImg: req.body.accImg
 	};
+
+	console.log(user)
 
 	User.update({
 		usr_name: user.usrName,
@@ -37,6 +42,15 @@ const updateUserProfile = (req, res) => {
 		}
 	}).then(result => {
 		console.log(result);
+		Account.update(
+			{
+				acc_image: user.accImg
+			},
+			{
+				where: {
+					acc_id: user.accId
+				}
+			})
 		res.status(200).json({message: "ok"});
 	}).catch(err => {
 		console.log(err);

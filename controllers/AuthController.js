@@ -1,7 +1,5 @@
-const connection = require("../config");
 const Account = require("../models/Account");
 const Users = require("../models/User");
-const sequelize = require("../config");
 const Ngo = require("../models/Ngo");
 const moment = require("moment");
 
@@ -11,8 +9,6 @@ const login = (req, res) => {
 		"email": req.body.email,
 		"password": req.body.password
 	}
-
-	console.log(credentials);
 
 	//associate models
 	Account.hasOne(Ngo, {
@@ -54,6 +50,7 @@ const login = (req, res) => {
 						res.status(200).json({
 							accId: account.acc_id,
 							usrId: account.user.usr_id,
+							accImage: account.acc_image,
 							token: generatedToken,
 							userType: "user"
 						});
@@ -67,6 +64,7 @@ const login = (req, res) => {
 						res.status(200).json({
 							accId: account.acc_id,
 							ngoId: account.ngo.ngo_id,
+							accImage: account.acc_image,
 							token: generatedToken,
 							userType: "ngo"
 						});
@@ -85,6 +83,7 @@ const login = (req, res) => {
 const registerUser = async (req, res) => {
 	//retrieve data from client site
 	const userInfo = {
+		"accImage": req.body.accImage,
 		"name": req.body.name,
 		"birthdate": req.body.birthdate,
 		"gender": req.body.gender,
@@ -101,14 +100,16 @@ const registerUser = async (req, res) => {
 			acc_email: userInfo.email
 		}
 	}).then(async acc => {
+
 		//account already registered in database
 		if (acc) {
-			res.status(400).json({message: "Email address already exist."})
+			res.status(400).json({message: "Email address already exist."});
 		} else {
 			//insert new user info into 'account' and 'users' table
 			const newAcc = await Account.create({
 				acc_email: userInfo.email,
-				acc_pass: userInfo.password
+				acc_pass: userInfo.password,
+				acc_image: null,
 			})
 
 			console.log(moment(userInfo.birthdate).format('YYYY-MM-DD HH:mm:ss'));
@@ -153,7 +154,8 @@ const registerNgo = (req, res) => {
 			//insert new user info into 'account' and 'users' table
 			const newAcc = await Account.create({
 				acc_email: ngoInfo.email,
-				acc_pass: ngoInfo.password
+				acc_pass: ngoInfo.password,
+				acc_image: null,
 			})
 
 			console.log(newAcc);

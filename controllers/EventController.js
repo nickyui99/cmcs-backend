@@ -1,13 +1,8 @@
-const connection = require("../config");
 const Event = require("../models/Event");
-const base64ToImage = require('base64-to-image');
-const Account = require("../models/Account");
 const Ngo = require("../models/Ngo");
-const {Op, Sequelize, DATEONLY} = require("sequelize");
+const {Op} = require("sequelize");
 const moment = require("moment");
-const {DATETIME} = require("mysql/lib/protocol/constants/types");
 const Participant = require("../models/Participant");
-const User = require("../models/User");
 const Task = require("../models/Task");
 const TaskAllocation = require("../models/TaskAllocation");
 
@@ -291,7 +286,7 @@ const cancelEvent = (req, res) => {
 
 	Task.findOne({
 		where: {
-			event_id : eventId
+			event_id: eventId
 		},
 		include: [
 			{
@@ -302,7 +297,7 @@ const cancelEvent = (req, res) => {
 		]
 	}).then(task => {
 
-		if(task) {
+		if (task) {
 			//deleting task allocation
 			task.task_allocations.forEach(item => {
 				TaskAllocation.destroy({
@@ -355,7 +350,6 @@ const cancelEvent = (req, res) => {
 		res.status(400).json({message: err});
 	})
 }
-
 
 
 module.exports = {getAllEvents, getMyEvents, getEventInfo, createEvent, updateEvent, cancelEvent, updateAchievement};

@@ -30,7 +30,7 @@ Event.init({
 			allowNull: false,
 		},
 		description: {
-			type: DataTypes.TEXT("medium"),
+			type: DataTypes.TEXT("long"),
 			allowNull: false,
 		},
 		start_datetime: {
@@ -42,7 +42,7 @@ Event.init({
 			allowNull: false,
 		},
 		address: {
-			type: DataTypes.STRING(255),
+			type: DataTypes.TEXT("long"),
 			allowNull: false,
 		},
 		lng: {

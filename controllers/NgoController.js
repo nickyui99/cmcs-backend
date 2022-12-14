@@ -22,23 +22,36 @@ const getNgo = (req, res) => {
 }
 
 const updateNgo = (req, res) => {
-	console.log(req.body);
+	const ngo = {
+		...req.body
+	}
 	Ngo.update({
-		ngo_name: req.body.ngoName,
-		ngo_admin: req.body.ngoAdmin,
-		contact_num: req.body.contactNum,
-		address: req.body.address,
-		bank_acc: req.body.bankAcc,
-		tng_acc: req.body.tngAcc
-	}, {
-		where: {
-			ngo_id: req.body.ngoId
-		}
-
-	}).then(r => {
-		console.log(r)
+			ngo_name: ngo.ngoName,
+			ngo_admin: ngo.ngoAdmin,
+			contact_num: ngo.contactNum,
+			address: ngo.address,
+			bank_acc: ngo.bankAcc,
+			tng_acc: ngo.tngAcc
+		},
+		{
+			where: {
+				ngo_id: ngo.ngoId
+			}
+		}).then(r => {
+		Account.update(
+			{
+				acc_image: ngo.accImg
+			},
+			{
+				where: {
+					acc_id: ngo.accId
+				}
+			})
+		res.status(200).json({message: "ok"});
+	}).catch(err => {
+		console.log(err);
+		res.status(400).json({message: err});
 	});
-	res.status(200).json({message: "ok"});
 }
 
 module.exports = {getNgo, updateNgo}

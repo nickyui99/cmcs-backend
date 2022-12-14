@@ -24,31 +24,31 @@ Ngo.init({
 			}
 		},
 		ngo_name: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(100),
 			allowNull: false,
 		},
 		ngo_admin: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(100),
 			allowNull: false,
 		},
 		contact_num: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(50),
 			allowNull: false,
 		},
 		address: {
-			type: DataTypes.STRING,
+			type: DataTypes.TEXT("long"),
 			allowNull: false,
 		},
 		bank_acc: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(30),
 			allowNull: false,
 		},
 		tng_acc: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(30),
 			allowNull: false
 		},
 		acc_status: {
-			type: DataTypes.STRING,
+			type: DataTypes.STRING(10),
 			allowNull: false,
 		}
 	},

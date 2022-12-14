@@ -47,6 +47,9 @@ const getUserAlert = (req, res) => {
 		where: {
 			usr_id: usrId,
 		},
+		order: [
+			['datetime', "DESC"]
+		],
 		include: [{
 			model: User,
 			required: true
@@ -67,13 +70,12 @@ const getAllAlert = (req, res) =>{
 		targetKey: 'usr_id'
 	})
 
-	const last7Day = new Date().getDate() -7
-
+	const last14Day = new Date().getDate() - 14;
 
 	Alert.findAll({
 		where:{
 			datetime: {
-				[Op.gte]: new Date().setDate(last7Day)
+				[Op.gte]: new Date().setDate(last14Day)
 			}
 		},
 		order: [

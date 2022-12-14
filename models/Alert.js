@@ -36,11 +36,11 @@ Alert.init({
 		allowNull: false,
 	},
 	lng: {
-		type: DataTypes.FLOAT,
+		type: DataTypes.FLOAT(6),
 		allowNull: false,
 	},
 	lat: {
-		type: DataTypes.FLOAT,
+		type: DataTypes.FLOAT(6),
 		allowNull: false,
 	},
 	address: {

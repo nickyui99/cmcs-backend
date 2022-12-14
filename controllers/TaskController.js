@@ -102,4 +102,34 @@ const allocateTask = (req, res) => {
 	})
 }
 
-module.exports = {getEventTask, addEventTask, allocateTask, getParticipantTask}
+const removeTask = (req, res) => {
+
+	const taskId = req.body.taskId;
+	const participantId = req.body.participantId;
+
+	TaskAllocation.findOne({
+		where: {
+			task_id: taskId,
+			participant_id: participantId
+		}
+	}).then(PIC => {
+		console.log(PIC)
+		if(PIC) {
+			TaskAllocation.destroy({
+				where: {
+					task_id: taskId,
+					participant_id: participantId
+				}
+			}).then(result => {
+				res.status(200).json({message: result});
+			})
+		}else {
+			res.status(400).json({message: "Invalid participant information!!"});
+		}
+	}).catch(err => {
+		console.log(err);
+		res.status(400).json({message: err});
+	})
+}
+
+module.exports = {getEventTask, addEventTask, allocateTask, getParticipantTask, removeTask}

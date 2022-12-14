@@ -20,8 +20,11 @@ Account.init({
 		allowNull: false,
 	},
 	acc_pass: {
-		type: DataTypes.STRING,
+		type: DataTypes.STRING(20),
 		allowNull: false,
+	},
+	acc_image: {
+		type: DataTypes.TEXT("long"),
 	},
 	token: {
 		type: DataTypes.STRING,

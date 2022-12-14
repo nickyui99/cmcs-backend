@@ -107,4 +107,30 @@ const getAccInfo = (req,res) => {
 	})
 }
 
+const updateAccountImage = (req, res) => {
+	const accId = req.body.accId;
+	const accImage = req.body.accImage;
+
+	Account.findOne({
+		where:{
+			acc_id: accId,
+		}
+	}).then(acc => {
+		if (acc) {
+			Account.update({
+				acc_image: accImage
+			}).then(result => {
+				console.log(result);
+				res.status(200).statusMessage("OK");
+			}).catch(err => {
+				console.log(err);
+				res.status(400).statusMessage("Error in changing profile picture");
+			})
+
+		} else {
+			res.status(400).statusMessage("Invalid info");
+		}
+	})
+}
+
 module.exports = {queryAccount, getAccInfo}
