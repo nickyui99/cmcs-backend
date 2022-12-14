@@ -23,7 +23,6 @@ const sequelize = new Sequelize("sql6582248", "sql6582248", "l6qg7ePrQU", {
 	}
 });
 
-
 // const sequelize = new Sequelize("cmcs", "nick@cmcs1", "Nicholas12345!", {
 // 	host: "cmcs1.database.windows.net",
 // 	dialect: "mssql",

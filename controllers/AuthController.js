@@ -41,12 +41,16 @@ const login = (req, res) => {
 					res.status(400).json({message: "Invalid credentials"});
 				} else {
 					if (account.user) {  //if user update their token
-						let generatedToken = Date.now().toString();
-						Account.update({token: generatedToken}, {
-							where: {
-								acc_id: account.acc_id,
-							}
-						});
+						let generatedToken = new Date.now().toString();
+						Account.update(
+							{
+								token: generatedToken
+							},
+							{
+								where: {
+									acc_id: account.acc_id,
+								}
+							});
 						res.status(200).json({
 							accId: account.acc_id,
 							usrId: account.user.usr_id,
@@ -126,7 +130,6 @@ const registerUser = async (req, res) => {
 		}
 	})
 }
-
 
 const registerNgo = (req, res) => {
 	const ngoInfo = {
