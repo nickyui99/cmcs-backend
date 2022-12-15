@@ -3,6 +3,7 @@ const Ngo = require("../models/Ngo");
 const User = require("../models/User");
 const Account = require("../models/Account");
 const LoveStory = require("../models/LoveStory");
+const {loveStory} = require("./LoveStoryController");
 
 
 const createStory = (req, res) => {
@@ -66,11 +67,12 @@ const getAllStories = (req, res) => {
 			},
 			{
 				model: LoveStory,
+				attributes: ["acc_id"],
 			}
 		]
-	}).then(result => {
-		console.log(result);
-		res.status(200).json(result);
+	}).then(story => {
+		console.log(story);
+		res.status(200).json(story);
 	}).catch(err => {
 		console.log(err);
 		res.status(400).json({message: err})
