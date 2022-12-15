@@ -187,7 +187,6 @@ const approveRequest = (req, res) => {
 }
 
 const attendEvent = (req, res) => {
-	console.log(req.body)
 
 	const eventId = req.body.eventId;
 	const usrId = req.body.usrId;
@@ -210,9 +209,8 @@ const attendEvent = (req, res) => {
 			}
 		]
 	}).then(participant => {
-		console.log(participant)
 		if (participant) {
-			if (participant.status === true) {
+			if (participant.status === true && participant.attendance === false) {
 				Participant.update({
 					attendance: true
 				}, {
@@ -234,22 +232,29 @@ const attendEvent = (req, res) => {
 						}
 					).then(result => {
 						console.log(result);
-						res.status(200).json({message: "OK"});
+						res.status(200).json({message: "OK", acc_exp: accExp});
 					}).catch(err => {
 						console.log(err);
-						res.status(400).json({message: err});
+						res.status(400).json({message: err})
 					})
 				}).catch(err => {
 					console.log(err);
-					res.status(400).json({message: err});
+					res.status(400).json({message: err})
 				});
-			} else {
-				res.status(400).json({message: "Your join status is not approved yet. Please contact the organizer."});
+			}
+			else if(participant.status === false) {
+				res.status(400).json({message: "Please contact the organizer to approve your join request"});
+			}
+			else {
+				res.status(400).json({message: "You already attended the event"});
 			}
 
 		} else {
 			res.status(400).json({message: "You are not a participant of this event"});
 		}
+	}).catch(err => {
+		console.log(err);
+		res.status(400).json({message: err})
 	})
 }
 
