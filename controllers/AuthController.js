@@ -181,8 +181,7 @@ const registerNgo = (req, res) => {
 
 const logout = (req, res) => {
 	//retrieve token from client site
-	const userToken = req.body.token;
-	console.log(userToken);
+	const accId = req.body.accId;
 
 	//set token to null
 	Account.update(
@@ -191,7 +190,7 @@ const logout = (req, res) => {
 		},
 		{
 			where: {
-				acc_id: acc.acc_id
+				acc_id: accId
 			}
 		}
 	).then(data => {
