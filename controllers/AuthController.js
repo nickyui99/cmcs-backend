@@ -184,28 +184,19 @@ const logout = (req, res) => {
 	const userToken = req.body.token;
 	console.log(userToken);
 
-	//query if account exist in database
-	Account.findOne({
-		where: {
-			token: userToken
-		}
-	}).then(async acc => {
-
-		//set token to null
-		Account.update(
-			{
-				token: null
-			},
-			{
-				where: {
-					acc_id: acc.acc_id
-				}
+	//set token to null
+	Account.update(
+		{
+			token: null
+		},
+		{
+			where: {
+				acc_id: acc.acc_id
 			}
-		).then(data => {
-			console.log(data)
-		})
+		}
+	).then(data => {
+		console.log(data)
 	})
-
 
 	res.status(200).json({message: "logout success"});
 }
