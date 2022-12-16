@@ -35,7 +35,7 @@ const getAllEvents = (req, res) => {
 			}
 		},
 		order: [
-			['start_datetime', "DESC"]
+			['end_datetime', "DESC"]
 		],
 		include: [
 			{
