@@ -55,13 +55,15 @@ const getAllStories = (req, res) => {
 		include: [
 			{
 				model: Account,
-				required: true,
+				attributes: ["acc_id", "acc_image"],
 				include: [
 					{
-						model: User
+						model: User,
+						attributes: ["usr_name"]
 					},
 					{
-						model: Ngo
+						model: Ngo,
+						attributes: ["ngo_name"]
 					}
 				]
 			},
