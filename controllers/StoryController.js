@@ -50,7 +50,7 @@ const getAllStories = (req, res) => {
 
 	Story.findAll({
 		order: [
-			['created_at', "DESC"]
+			['created_at', "DESC"],
 		],
 		include: [
 			{

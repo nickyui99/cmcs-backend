@@ -83,7 +83,7 @@ const getMyEvents = (req, res) => {
 			'trash_collected'
 		],
 		order: [
-			['start_datetime', "DESC"]
+			['end_datetime', "DESC"]
 		],
 		where: {
 			ngo_id: ngoId
