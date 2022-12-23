@@ -32,7 +32,7 @@ Ngo.init({
 			allowNull: false,
 		},
 		contact_num: {
-			type: DataTypes.STRING(50),
+			type: DataTypes.STRING(15),
 			allowNull: false,
 		},
 		address: {
