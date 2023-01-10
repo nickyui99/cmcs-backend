@@ -9,12 +9,23 @@ const {Sequelize} = require("sequelize");
 // 	}
 // });
 
-const sequelize = new Sequelize("sql6582248", "sql6582248", "l6qg7ePrQU", {
-	host: "sql6.freesqldatabase.com",
+// const sequelize = new Sequelize("sql6582248", "sql6582248", "l6qg7ePrQU", {
+// 	host: "sql6.freesqldatabase.com",
+// 	dialect: "mysql",
+// 	define: {
+// 		timestamps: false,
+// 	},
+// 	pool: {
+// 		max: 5,
+// 		min: 0,
+// 		acquire: 30000,
+// 		idle: 10000
+// 	}
+// });
+
+const sequelize = new Sequelize("heroku_355354200d8eddf", "b51b59d934b13d", "8429f01d", {
+	host: "us-cdbr-east-06.cleardb.net",
 	dialect: "mysql",
-	define: {
-		timestamps: false,
-	},
 	pool: {
 		max: 5,
 		min: 0,

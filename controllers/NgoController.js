@@ -1,6 +1,53 @@
 const Ngo = require("../models/Ngo");
 const Account = require("../models/Account");
 
+const registerNgo = (req, res) => {
+	const ngoInfo = {
+		ngoName: req.body.ngoName,
+		adminName: req.body.adminName,
+		contactNum: req.body.contactNum,
+		address: req.body.address,
+		bankAcc: req.body.bankAcc,
+		tngAcc: req.body.tngAcc,
+		email: req.body.email,
+		password: req.body.password,
+	}
+	console.log(ngoInfo);
+
+	//query if account exist in database
+	Account.findOne({
+		where: {
+			acc_email: ngoInfo.email
+		}
+	}).then(async acc => {
+		//account already registered in database
+		if (acc) {
+			res.status(400).json({message: "Email address already exist. Please try again."})
+		} else {
+			//insert new user info into 'account' and 'users' table
+			const newAcc = await Account.create({
+				acc_email: ngoInfo.email,
+				acc_pass: ngoInfo.password,
+				acc_image: null,
+			})
+
+			console.log(newAcc);
+
+			const newNgo = await Ngo.create({
+				acc_id: newAcc.acc_id,
+				ngo_name: ngoInfo.ngoName,
+				ngo_admin: ngoInfo.adminName,
+				contact_num: ngoInfo.contactNum,
+				address: ngoInfo.address,
+				bank_acc: ngoInfo.bankAcc,
+				tng_acc: ngoInfo.tngAcc,
+				acc_status: "approved"
+			});
+
+			res.status(200).json({message: "OK"});
+		}
+	})
+}
 
 const getNgo = (req, res) => {
 
@@ -54,4 +101,4 @@ const updateNgo = (req, res) => {
 	});
 }
 
-module.exports = {getNgo, updateNgo}
+module.exports = {registerNgo, getNgo, updateNgo}

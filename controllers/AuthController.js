@@ -84,101 +84,6 @@ const login = (req, res) => {
 		});
 }
 
-const registerUser = async (req, res) => {
-	//retrieve data from client site
-	const userInfo = {
-		"accImage": req.body.accImage,
-		"name": req.body.name,
-		"birthdate": req.body.birthdate,
-		"gender": req.body.gender,
-		"contactNum": req.body.contactNum,
-		"email": req.body.email,
-		"password": req.body.password
-	}
-
-	console.log(userInfo);
-
-	//query if account exist in database
-	Account.findOne({
-		where: {
-			acc_email: userInfo.email
-		}
-	}).then(async acc => {
-
-		//account already registered in database
-		if (acc) {
-			res.status(400).json({message: "Email address already exist."});
-		} else {
-			//insert new user info into 'account' and 'users' table
-			const newAcc = await Account.create({
-				acc_email: userInfo.email,
-				acc_pass: userInfo.password,
-				acc_image: null,
-			})
-
-			console.log(moment(userInfo.birthdate).format('YYYY-MM-DD HH:mm:ss'));
-
-			const newUser = await Users.create({
-				acc_id: newAcc.acc_id,
-				usr_name: userInfo.name,
-				birthdate: userInfo.birthdate,
-				contact_num: userInfo.contactNum,
-				gender: userInfo.gender,
-				acc_exp: 0
-			});
-			res.status(200).json({message: "Account registered successfully~~"});
-		}
-	})
-}
-
-const registerNgo = (req, res) => {
-	const ngoInfo = {
-		ngoName: req.body.ngoName,
-		adminName: req.body.adminName,
-		contactNum: req.body.contactNum,
-		address: req.body.address,
-		bankAcc: req.body.bankAcc,
-		tngAcc: req.body.tngAcc,
-		email: req.body.email,
-		password: req.body.password,
-	}
-	console.log(ngoInfo);
-
-	//query if account exist in database
-	Account.findOne({
-		where: {
-			acc_email: ngoInfo.email
-		}
-	}).then(async acc => {
-		//account already registered in database
-		if (acc) {
-			res.status(400).json({message: "Email address already exist. Please try again."})
-		} else {
-			//insert new user info into 'account' and 'users' table
-			const newAcc = await Account.create({
-				acc_email: ngoInfo.email,
-				acc_pass: ngoInfo.password,
-				acc_image: null,
-			})
-
-			console.log(newAcc);
-
-			const newNgo = await Ngo.create({
-				acc_id: newAcc.acc_id,
-				ngo_name: ngoInfo.ngoName,
-				ngo_admin: ngoInfo.adminName,
-				contact_num: ngoInfo.contactNum,
-				address: ngoInfo.address,
-				bank_acc: ngoInfo.bankAcc,
-				tng_acc: ngoInfo.tngAcc,
-				acc_status: "approved"
-			});
-
-			res.status(200).json({message: "OK"});
-		}
-	})
-}
-
 const logout = (req, res) => {
 	//retrieve token from client site
 	const accId = req.body.accId;
@@ -200,4 +105,4 @@ const logout = (req, res) => {
 	res.status(200).json({message: "logout success"});
 }
 
-module.exports = {login, registerUser, registerNgo, logout};
+module.exports = {login, logout};
