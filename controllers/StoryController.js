@@ -5,7 +5,9 @@ const Account = require("../models/Account");
 const LoveStory = require("../models/LoveStory");
 const {loveStory} = require("./LoveStoryController");
 
-
+/*
+This function is responsible to allow the user and NGO to create story
+ */
 const createStory = (req, res) => {
 	console.log(req.body)
 	const accId = req.body.accId;
@@ -26,6 +28,9 @@ const createStory = (req, res) => {
 	});
 }
 
+/*
+This function is responsible to get all the stories
+ */
 const getAllStories = (req, res) => {
 
 	Story.belongsTo(Account, {

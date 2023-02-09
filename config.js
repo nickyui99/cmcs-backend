@@ -1,13 +1,19 @@
 const {Sequelize} = require("sequelize");
 
 
-// const sequelize = new Sequelize("cmcs", "root", "", {
-// 	host: "127.0.0.1",
-// 	dialect: "mysql",
-// 	define: {
-// 		timestamps: false,
-// 	}
-// });
+const sequelize = new Sequelize("cmcs", "root", "", {
+	host: "127.0.0.1",
+	dialect: "mysql",
+	define: {
+		timestamps: false,
+	},
+	pool: {
+		max: 5,
+		min: 0,
+		acquire: 30000,
+		idle: 10000
+	}
+});
 
 // const sequelize = new Sequelize("sql6582248", "sql6582248", "l6qg7ePrQU", {
 // 	host: "sql6.freesqldatabase.com",
@@ -23,16 +29,16 @@ const {Sequelize} = require("sequelize");
 // 	}
 // });
 
-const sequelize = new Sequelize("heroku_355354200d8eddf", "b51b59d934b13d", "8429f01d", {
-	host: "us-cdbr-east-06.cleardb.net",
-	dialect: "mysql",
-	pool: {
-		max: 5,
-		min: 0,
-		acquire: 30000,
-		idle: 10000
-	}
-});
+// const sequelize = new Sequelize("heroku_355354200d8eddf", "b51b59d934b13d", "8429f01d", {
+// 	host: "us-cdbr-east-06.cleardb.net",
+// 	dialect: "mysql",
+// 	pool: {
+// 		max: 5,
+// 		min: 0,
+// 		acquire: 30000,
+// 		idle: 10000
+// 	}
+// });
 
 // const sequelize = new Sequelize("cmcs", "nick@cmcs1", "Nicholas12345!", {
 // 	host: "cmcs1.database.windows.net",

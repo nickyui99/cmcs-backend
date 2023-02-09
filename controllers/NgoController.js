@@ -1,6 +1,9 @@
 const Ngo = require("../models/Ngo");
 const Account = require("../models/Account");
 
+/*
+This function is responsible to allow NGO to register NGO account
+ */
 const registerNgo = (req, res) => {
 	const ngoInfo = {
 		ngoName: req.body.ngoName,
@@ -49,6 +52,9 @@ const registerNgo = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to get NGO data
+ */
 const getNgo = (req, res) => {
 
 	const ngoId = req.body.ngoId;
@@ -68,6 +74,9 @@ const getNgo = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to update NGO profile
+ */
 const updateNgo = (req, res) => {
 	const ngo = {
 		...req.body

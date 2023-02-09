@@ -3,6 +3,9 @@ const User = require("../models/User");
 const {Op, Sequelize} = require("sequelize");
 const moment = require("moment/moment");
 
+/*
+This function is responsible to allow the user to create alert
+ */
 const createAlert = (req, res) => {
 	const alert = {
 		usrId: req.body.usrId,
@@ -34,6 +37,9 @@ const createAlert = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to get the user's created alert
+ */
 const getUserAlert = (req, res) => {
 	const usrId = req.body.usrId;
 	console.log(usrId);
@@ -64,6 +70,9 @@ const getUserAlert = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to get all the users alert
+ */
 const getAllAlert = (req, res) =>{
 	Alert.belongsTo(User, {
 		foreignKey: 'usr_id',

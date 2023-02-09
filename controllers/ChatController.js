@@ -6,6 +6,9 @@ const User = require("../models/User");
 const Ngo = require("../models/Ngo");
 const Users = require("../models/User");
 
+/*
+This function is responsible to get the chat room
+ */
 const getChatRoom = (req, res) => {
 	const accId = req.body.accId;
 	console.log(accId)
@@ -94,6 +97,9 @@ const getChatRoom = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to send the chats to another user or NGO
+ */
 const sendChat = (req, res) => {
 
 	const senderId = req.body.senderId;
@@ -156,6 +162,9 @@ const sendChat = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to fetch the chat messages between the user
+ */
 const fetchChat = (req, res) => {
 	const senderId = req.body.senderId;
 	const receiverId = req.body.receiverId;

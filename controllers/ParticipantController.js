@@ -6,7 +6,9 @@ const Event = require("../models/Event");
 const Ngo = require("../models/Ngo");
 const sequelize = require("../config");
 
-
+/*
+This function is responsible to allow user to join event
+ */
 const joinEvent = (req, res) => {
 
 	const data = req.body;
@@ -35,6 +37,9 @@ const joinEvent = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow the NGO to get the participants of an event
+ */
 const getParticipants = (req, res) => {
 	const eventId = req.body.eventId;
 	const query = req.body.query;
@@ -70,6 +75,9 @@ const getParticipants = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow the NGO to get the join requests from the user
+ */
 const joinRequests = (req, res) => {
 	console.log(req.body)
 	const eventId = req.body.eventId;
@@ -105,6 +113,9 @@ const joinRequests = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow the NGO to delete participants
+ */
 const deleteParticipant = (req, res) => {
 	const usrId = req.body.usrId;
 	const eventId = req.body.eventId;
@@ -136,6 +147,9 @@ const deleteParticipant = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to get the event capacity
+ */
 const eventCapacity = (req, res) => {
 	const eventId = req.body.eventId;
 	Participant.count({
@@ -145,10 +159,14 @@ const eventCapacity = (req, res) => {
 	}).then((count) => {
 		console.log(count);
 		res.status(200).json({participantCount: count})
+	}).catch(err => {
+		res.status(400).json({message: err});
 	})
 }
 
-
+/*
+This function is responsible to get the participant info
+ */
 const getParticipantInfo = (req, res) => {
 	const usrId = req.body.usrId;
 	const eventId = req.body.eventId;
@@ -167,6 +185,9 @@ const getParticipantInfo = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to approve the user joining request
+ */
 const approveRequest = (req, res) => {
 	const participantId = req.body.participantId;
 
@@ -186,6 +207,9 @@ const approveRequest = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow th euser to attend the event
+ */
 const attendEvent = (req, res) => {
 
 	const eventId = req.body.eventId;
@@ -258,6 +282,9 @@ const attendEvent = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow the user to get their participated event
+ */
 const getParticipatedEvent = (req, res) => {
 	console.log(req.body)
 

@@ -4,7 +4,9 @@ const Participant = require("../models/Participant");
 const User = require("../models/User");
 const {Op} = require("sequelize");
 
-
+/*
+This function is responsible to get the event's task
+ */
 const getEventTask = (req, res) => {
 	const eventId = req.body.eventId;
 
@@ -30,6 +32,9 @@ const getEventTask = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow NGO to add event task
+ */
 const addEventTask = async (req, res) => {
 	const eventId = req.body.eventId;
 	const taskName = req.body.taskName;
@@ -45,6 +50,9 @@ const addEventTask = async (req, res) => {
 	})
 }
 
+/*
+This function is responsible to get participant assigned task
+ */
 const getParticipantTask = (req, res) => {
 	const participantId = req.body.participantId;
 	const eventId = req.body.eventId;
@@ -74,6 +82,9 @@ const getParticipantTask = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow NGO to allocate task to the participant
+ */
 const allocateTask = (req, res) => {
 
 	const taskId = req.body.taskId;
@@ -102,6 +113,9 @@ const allocateTask = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow NGO to remove assigned task from the participant
+ */
 const removeTask = (req, res) => {
 
 	const taskId = req.body.taskId;

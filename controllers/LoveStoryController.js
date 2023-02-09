@@ -1,5 +1,8 @@
 const LoveStory = require("../models/LoveStory");
 
+/*
+Ths function is responsible to allow the user and NGO to love story
+ */
 const loveStory = (req, res) => {
 	const accId = req.body.accId;
 	const storyId = req.body.storyId;
@@ -38,6 +41,9 @@ const loveStory = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to get all the user and NGO that love the story
+ */
 const getLoveStory = (req, res) => {
 	const accId = req.body.accId;
 

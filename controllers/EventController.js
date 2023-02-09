@@ -6,7 +6,9 @@ const Participant = require("../models/Participant");
 const Task = require("../models/Task");
 const TaskAllocation = require("../models/TaskAllocation");
 
-
+/*
+This function is responsible to get all the events
+ */
 const getAllEvents = (req, res) => {
 
 	const usrId = req.body.usrId
@@ -54,6 +56,9 @@ const getAllEvents = (req, res) => {
 	});
 }
 
+/*
+This function is responsible to allow NGO to get the event they created
+ */
 const getMyEvents = (req, res) => {
 
 	const ngoId = req.body.ngoId;
@@ -104,6 +109,9 @@ const getMyEvents = (req, res) => {
 	});
 }
 
+/*
+This function is responsible to get the event information
+ */
 const getEventInfo = (req, res) => {
 
 	const eventId = req.body.eventId;
@@ -149,6 +157,9 @@ const getEventInfo = (req, res) => {
 	});
 }
 
+/*
+This function is responsible to allow the NGO to create event
+ */
 const createEvent = (req, res) => {
 	console.log(req.body)
 
@@ -194,6 +205,9 @@ const createEvent = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow NGO to update the event
+ */
 const updateEvent = (req, res) => {
 	console.log(req.body)
 
@@ -239,6 +253,9 @@ const updateEvent = (req, res) => {
 	})
 }
 
+/*
+This function is responsible to allow the NGO to update the achievement
+ */
 const updateAchievement = (req, res) => {
 	console.log(req.body)
 
@@ -271,6 +288,9 @@ const updateAchievement = (req, res) => {
 	})
 }
 
+/*
+This function is to allow the NGO to cancel the event
+ */
 const cancelEvent = (req, res) => {
 	const eventId = req.body.eventId;
 
@@ -350,6 +370,5 @@ const cancelEvent = (req, res) => {
 		res.status(400).json({message: err});
 	})
 }
-
 
 module.exports = {getAllEvents, getMyEvents, getEventInfo, createEvent, updateEvent, cancelEvent, updateAchievement};
