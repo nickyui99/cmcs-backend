@@ -1,6 +1,6 @@
 "use strict";
-const sequelize = require('../config')
-const {Sequelize, DataTypes, Model} = require("sequelize");
+const {sequelize} = require('../config')
+const {DataTypes, Model} = require("sequelize");
 
 class Story extends Model {
 	static associate() {
@@ -28,10 +28,6 @@ Story.init({
 		},
 		image: {
 			type: DataTypes.TEXT("long"),
-			allowNull: false,
-		},
-		created_at: {
-			type: DataTypes.DATE,
 			allowNull: false,
 		},
 	},

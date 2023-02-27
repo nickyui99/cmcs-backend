@@ -1,5 +1,5 @@
 "use strict";
-const sequelize = require("../config");
+const {sequelize} = require("../config");
 const {DataTypes, Model} = require("sequelize");
 
 class Account extends Model {

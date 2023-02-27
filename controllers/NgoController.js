@@ -61,7 +61,7 @@ const getNgo = (req, res) => {
 	console.log(ngoId);
 
 	Ngo.findOne({
-		attributes: ['ngo_id', 'ngo_name', 'ngo_admin', 'contact_num', 'address', 'bank_acc', 'tng_acc'],
+		attributes: ['ngo_id', 'ngo_name', 'ngo_admin', 'contact_num', 'address', 'bank_acc', 'tng_acc', 'about', 'vision', 'mission'],
 		where: {
 			ngo_id: ngoId
 		}
@@ -110,4 +110,28 @@ const updateNgo = (req, res) => {
 	});
 }
 
-module.exports = {registerNgo, getNgo, updateNgo}
+/*
+This function is responsible to update NGO profile
+ */
+const updateNgoProfile = (req, res) => {
+	const ngo = {
+		...req.body
+	}
+	Ngo.update({
+			about: ngo.about,
+			vision: ngo.vision,
+			mission: ngo.mission,
+		},
+		{
+			where: {
+				ngo_id: ngo.ngoId
+			}
+		}).then(r => {
+			res.status(200).json({message: "ok"});
+	}).catch(err => {
+		console.log(err);
+		res.status(400).json({message: err});
+	});
+}
+
+module.exports = {registerNgo, getNgo, updateNgo, updateNgoProfile}

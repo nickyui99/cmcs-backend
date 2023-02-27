@@ -1,25 +1,12 @@
 const {Sequelize} = require("sequelize");
 
+const CLIENT_ID = "767625170663-0v54gghevmafdjht00t73krviu7bb4a6.apps.googleusercontent.com";
 
-const sequelize = new Sequelize("cmcs", "root", "", {
-	host: "127.0.0.1",
-	dialect: "mysql",
-	define: {
-		timestamps: false,
-	},
-	pool: {
-		max: 5,
-		min: 0,
-		acquire: 30000,
-		idle: 10000
-	}
-});
-
-// const sequelize = new Sequelize("sql6582248", "sql6582248", "l6qg7ePrQU", {
-// 	host: "sql6.freesqldatabase.com",
+// const sequelize = new Sequelize("cmcs", "root", "", {
+// 	host: "127.0.0.1",
 // 	dialect: "mysql",
 // 	define: {
-// 		timestamps: false,
+// 		timestamps: true,
 // 	},
 // 	pool: {
 // 		max: 5,
@@ -28,6 +15,18 @@ const sequelize = new Sequelize("cmcs", "root", "", {
 // 		idle: 10000
 // 	}
 // });
+
+const sequelize = new Sequelize("defaultdb", "doadmin", "AVNS_nZ2a5tUoNyTRmiBYuAl", {
+	host: "dbaas-db-5634255-do-user-13652355-0.b.db.ondigitalocean.com",
+	dialect: "mysql",
+	port: 25060,
+	pool: {
+		max: 5,
+		min: 0,
+		acquire: 30000,
+		idle: 10000
+	}
+});
 
 // const sequelize = new Sequelize("heroku_355354200d8eddf", "b51b59d934b13d", "8429f01d", {
 // 	host: "us-cdbr-east-06.cleardb.net",
@@ -40,40 +39,5 @@ const sequelize = new Sequelize("cmcs", "root", "", {
 // 	}
 // });
 
-// const sequelize = new Sequelize("cmcs", "nick@cmcs1", "Nicholas12345!", {
-// 	host: "cmcs1.database.windows.net",
-// 	dialect: "mssql",
-// 	define: {
-// 		timestamps: false,
-// 	},
-// 	parseJSON: true,
-// 	dialectOptions: {
-// 		encrypt: true,
-// 		enableArithAbort: true,
-// 		trustServerCertificate: false
-// 	},
-// 	pool: {
-// 		min: 0,
-// 		idleTimeoutMillis: 3000
-// 	}
-// });
 
-// const sequelize = new Sequelize("cmcs", "nick@cmcs1", "Nicholas12345!", {
-// 	host: "cmcs-9766a:us-central1:cmcs",
-// 	dialect: "mssql",
-// 	define: {
-// 		timestamps: false,
-// 	},
-// 	parseJSON: true,
-// 	dialectOptions: {
-// 		encrypt: true,
-// 		enableArithAbort: true,
-// 		trustServerCertificate: false
-// 	},
-// 	pool: {
-// 		min: 0,
-// 		idleTimeoutMillis: 3000
-// 	}
-// });
-
-module.exports = sequelize;
+module.exports = {sequelize, CLIENT_ID};

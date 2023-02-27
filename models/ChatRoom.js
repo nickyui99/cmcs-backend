@@ -1,6 +1,6 @@
 "use strict";
-const sequelize = require('../config')
-const {Sequelize, DataTypes, Model} = require("sequelize");
+const {sequelize}= require('../config')
+const {DataTypes, Model} = require("sequelize");
 
 class ChatRoom extends Model {
 	static associate() {}

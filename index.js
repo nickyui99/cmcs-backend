@@ -3,7 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const path = require('path');
 const router = require("./router/routes.js")
-const sequelize = require("./config");
+const {sequelize} = require("./config");
 
 const app = express();
 
@@ -13,7 +13,7 @@ app.use(session({
 	saveUninitialized: true
 }));
 
-app.use(express.json({limit: '10mb'}));
+app.use(express.json({limit: '5mb'}));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 
@@ -25,6 +25,12 @@ app.use((_, res, next) => {
 });
 
 app.use(router);
+
+sequelize.authenticate().then(() => {
+	console.log('Connection has been established successfully.');
+}).catch((error) => {
+	console.error('Unable to connect to the database: ', error);
+});
 
 sequelize.sync().then(r =>{});
 

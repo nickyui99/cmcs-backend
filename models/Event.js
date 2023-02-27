@@ -1,4 +1,4 @@
-const sequelize = require("../config");
+const {sequelize} = require("../config");
 const {DataTypes, Model} = require("sequelize");
 
 class Event extends Model {
@@ -63,6 +63,10 @@ Event.init({
 		},
 		trash_collected: {
 			type: DataTypes.FLOAT(6),
+		},
+		viewer: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
 		}
 	},
 	{
