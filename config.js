@@ -5,7 +5,7 @@ const sequelize = new Sequelize("cmcs", "root", "", {
 	host: "127.0.0.1",
 	dialect: "mysql",
 	define: {
-		timestamps: false,
+		timestamps: true,
 	},
 	pool: {
 		max: 5,

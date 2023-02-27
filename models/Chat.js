@@ -34,10 +34,6 @@ Chat.init({
 			type: DataTypes.TEXT("long"),
 			allowNull: false,
 		},
-		created_at: {
-			type: DataTypes.DATE,
-			allowNull: false,
-		}
 	},
 	{
 		sequelize,

@@ -1,10 +1,12 @@
 const Event = require("../models/Event");
 const Ngo = require("../models/Ngo");
-const {Op} = require("sequelize");
+const {Op, Sequelize, QueryTypes} = require("sequelize");
 const moment = require("moment");
 const Participant = require("../models/Participant");
 const Task = require("../models/Task");
 const TaskAllocation = require("../models/TaskAllocation");
+const {query} = require("express");
+const User = require("../models/User");
 
 /*
 This function is responsible to get all the events
@@ -114,6 +116,7 @@ This function is responsible to get the event information
  */
 const getEventInfo = (req, res) => {
 
+	console.log("getEventInfo run")
 	const eventId = req.body.eventId;
 
 	Event.belongsTo(Ngo, {
@@ -148,9 +151,72 @@ const getEventInfo = (req, res) => {
 				attributes: ['ngo_name']
 			},
 		]
-	}).then(events => {
-		console.log(events)
-		res.status(200).json({events});
+	}).then(async events => {
+
+		async function fetchParticipantData() {
+			const participantData = await Participant.findAll({
+				attributes: [
+					[Sequelize.fn('DATE', Sequelize.col('createdAt')), 'date'],
+					[Sequelize.fn('COUNT', Sequelize.col('createdAt')), 'count']
+				],
+				where: {
+					createdAt: {
+						[Op.gte]: moment().subtract(7, 'days').toDate(),
+						[Op.lte]: moment().toDate()
+					},
+					status: 1,
+					event_id: events.event_id
+				},
+				group: 'date'
+			});
+
+			return participantData;
+		}
+
+		async function fetchGenderData(){
+			Participant.belongsTo(User, {
+				foreignKey: 'usr_id',
+				targetKey: 'usr_id'
+			});
+
+			const genderData = await Participant.findAll({
+				attributes: [
+					[Sequelize.fn('COUNT', Sequelize.col('*')), 'count'],
+					[Sequelize.literal('user.gender'), 'gender']
+				],
+				where: {
+					event_id: events.event_id,
+					status: 1
+				},
+				group: 'gender',
+				include: [
+					{
+						model: User,
+						required: true,
+						attributes: []
+					},
+				],
+				raw: true
+			});
+
+			console.log(genderData);
+
+			return genderData;
+		}
+
+		Promise.all([
+			fetchParticipantData(),
+			fetchGenderData()
+		])
+		.then(([participantData, genderData]) => {
+			res.status(200).json({events, participantData, genderData})
+		}).catch(err => {
+			console.log(err);
+			res.status(400).json({message: err});
+		})
+
+
+
 	}).catch(err => {
 		console.log(err);
 		res.status(400).json({message: err});
@@ -196,7 +262,8 @@ const createEvent = (req, res) => {
 				lat: eventData.latitude,
 				image: eventData.image,
 				max_participant: eventData.maximumParticipants,
-				trash_collected: 0
+				trash_collected: 0,
+				viewer: 0
 			});
 			res.status(200).json({message: "OK"});
 		} else {

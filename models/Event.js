@@ -63,6 +63,10 @@ Event.init({
 		},
 		trash_collected: {
 			type: DataTypes.FLOAT(6),
+		},
+		viewer: {
+			type: DataTypes.INTEGER,
+			allowNull: false,
 		}
 	},
 	{

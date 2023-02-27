@@ -40,12 +40,24 @@ Ngo.init({
 			allowNull: false,
 		},
 		bank_acc: {
-			type: DataTypes.STRING(30),
+			type: DataTypes.STRING(20),
 			allowNull: false,
 		},
 		tng_acc: {
-			type: DataTypes.STRING(30),
-			allowNull: false
+			type: DataTypes.STRING(20),
+			allowNull: false,
+		},
+		about: {
+			type: DataTypes.TEXT("medium"),
+			allowNull: true,
+		},
+		vision: {
+			type: DataTypes.TEXT("medium"),
+			allowNull: true,
+		},
+		mission: {
+			type: DataTypes.TEXT("medium"),
+			allowNull: true,
 		},
 		acc_status: {
 			type: DataTypes.STRING(10),
