@@ -42,8 +42,7 @@ const getChatRoom = (req, res) => {
 		]
 	}).then(room => {
 		const targetIds = room.map(item => {
-			let targetId = item.acc_id_1 === accId ? item.getDataValue("acc_id_2") : item.getDataValue("acc_id_1");
-			return targetId;
+			return item.acc_id_1 === accId ? item.getDataValue("acc_id_2") : item.getDataValue("acc_id_1");
 		});
 
 		console.log(targetIds)
@@ -68,7 +67,7 @@ const getChatRoom = (req, res) => {
 			]
 		}).then(acc => {
 			console.log(acc)
-			let dataCounter = 0;
+			let dataCounter = acc.length-1;
 			const roomList = room.map(item => {
 
 				const data =  {
@@ -81,7 +80,7 @@ const getChatRoom = (req, res) => {
 						contact_num: acc[dataCounter].ngo.contact_num ? acc[dataCounter].ngo.contact_num : acc[dataCounter].user.contact_num
 					}
 				}
-				dataCounter++;
+				dataCounter--;
 				return data;
 			});
 			console.log(roomList);
